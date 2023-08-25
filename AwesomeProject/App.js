@@ -1,11 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, Touchable, Text, TouchableOpacity } from 'react-native';
+import { StyledText } from './src/components/StyledText';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app! ily Eder</Text>
+      <StyledText text='Custom Styled Text' bold/>
+      <StyledText text='Chiquito' />
       <StatusBar style="auto" />
+      <TouchableOpacity style={styles.button} onPress={() => console.log('Press')}>
+        <Text>Botonbb</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -13,8 +18,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff', 
     alignItems: 'center',
     justifyContent: 'center',
   },
+  button: {
+    borderWidth: 3,
+    padding: 5,
+  }
 });
