@@ -1,10 +1,19 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
+import LoginInput from "../StyledInput/LoginInput";
 
 function LoginContent() {
     return (
-        <Text>Login Content</Text>
+        <View style={styles.container}>
+            <LoginInput label="Email"></LoginInput>
+        </View>
     );
 }
+
+const styles = {
+    container: {
+        padding: 20,
+    },
+};
 
 export default LoginContent;
