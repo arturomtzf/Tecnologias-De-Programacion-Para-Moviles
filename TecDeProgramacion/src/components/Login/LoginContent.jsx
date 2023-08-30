@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions, TextInput } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TextInput, Image } from "react-native";
 import TextStyled from "../TextStyled/TextStyled";
 import TouchableStyled from "../TouchableStyled/TouchableStyled";
 
@@ -13,7 +13,7 @@ export default function Login() {
                 <TouchableStyled
                     text={"Login"}
                     borderRadius={5}
-                    backgroundColor={"#3ddb4b"}
+                    backgroundColor={"#c0e863"}
                     paddingVertical={15}
                     marginVertical={20}
                 ></TouchableStyled>
@@ -26,20 +26,24 @@ export default function Login() {
                     <TouchableStyled
                         text={"Google"}
                         borderRadius={5}
-                        backgroundColor={"#c2c0c0"}
+                        backgroundColor={"#fff"}
                         paddingVertical={15}
                         paddingHorizontal={20}
+                        imagen={"google"}
+                        borderWidth={1}
                     ></TouchableStyled>
                     <TouchableStyled
                         text={"Facebook"}
                         borderRadius={5}
-                        backgroundColor={"#c2c0c0"}
+                        backgroundColor={"#fff"}
                         paddingVertical={15}
                         paddingHorizontal={20}
+                        imagen={"facebook"}
+                        borderWidth={1}
                     ></TouchableStyled>
                 </View>
                 <View style={styles.containerText}>
-                    <TextStyled text={"Dont have an account? "}></TextStyled>
+                    <TextStyled text={"Don't have an account? "}></TextStyled>
                     <TextStyled text={"Register"} color={"green"}></TextStyled>
                 </View>
             </View>
@@ -64,6 +68,7 @@ const styles = StyleSheet.create({
     },
     contentInput: {
         padding: 20,
+        paddingTop: 0,
     },
     contentButton: {
         marginVertical: 20,

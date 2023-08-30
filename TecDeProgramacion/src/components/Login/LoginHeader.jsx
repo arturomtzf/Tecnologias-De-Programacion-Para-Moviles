@@ -16,7 +16,7 @@ const { width, height } = Dimensions.get("window");
 const styles = StyleSheet.create({
     header: {
         backgroundColor: "#00004d",
-        height: height / 3,
+        height: height * 0.3,
         width: width,
         justifyContent: "flex-end",
         paddingLeft: 20,
