@@ -1,11 +1,12 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { Text, TouchableOpacity, Image } from "react-native";
 
-export const Person = ({name, lastName, index}) => {
+export const Person = ({name, lastName, index, imagen}) => {
     return (
-        <View style={{ borderWidth: 1, borderColor: index % 2 === 0 ? "red" : "blue" }}>
+        <TouchableOpacity style={{ borderWidth: 1, borderColor: index % 2 === 0 ? "red" : "blue" }}>
+            <Image source={'https://picsum.photos/200'}/>
             <Text style={{ fontSize: 40 }}>{name}</Text>
             <Text style={{ fontSize: 40 }}>{lastName}</Text>
-        </View>
+        </TouchableOpacity>
     );
 };
