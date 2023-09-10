@@ -3,7 +3,7 @@ import { Text } from "react-native";
 
 function LoginContent() {
     return (
-        <Text>Content</Text>
+        <Text>Contento mo</Text>
     );
 }
 
