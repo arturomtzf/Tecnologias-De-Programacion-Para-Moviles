@@ -1,13 +1,11 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Image, Dimensions, TextInput } from "react-native";
-import Login from "./src/screens/Login";
+import Constants from "expo-constants";
+import HomePage from "./src/screens/HomePage";
 
 export default function App() {
-    const { height } = Dimensions.get("screen");
-
     return (
         <View style={styles.container}>
-            <Login />
+            <HomePage />
         </View>
     );
 }
@@ -15,8 +13,8 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
+        paddingTop: Constants.statusBarHeight,
+        backgroundColor: "#f5f5f5",
         justifyContent: "center",
     },
 });
