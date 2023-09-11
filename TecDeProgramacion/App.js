@@ -1,13 +1,19 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, Image, Dimensions, TextInput } from "react-native";
+import { StyleSheet, View, TextInput, Text } from "react-native";
 import Login from "./src/screens/Login";
+import { useState } from "react";
 
 export default function App() {
-    const { height } = Dimensions.get("screen");
+    const [inputValue, setInputValue] = useState("Value");
 
     return (
         <View style={styles.container}>
-            <Login />
+            <TextInput
+                value={inputValue}
+                onChangeText={(value) => setInputValue(value)}
+                style={{ borderWidth: 1, paddingHorizontal: 10, fontSize: 20 }}
+            />
+            <Text style={{ fontSize: 50 }}>{inputValue}</Text>
         </View>
     );
 }
