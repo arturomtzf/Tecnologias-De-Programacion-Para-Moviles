@@ -1,22 +1,24 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Image, Dimensions, TextInput } from "react-native";
-import Login from "./src/screens/Login";
+import Messenger from "./src/screens/Messenger";
+import Constants from "expo-constants";
 
 export default function App() {
     const { height } = Dimensions.get("screen");
 
     return (
         <View style={styles.container}>
-            <Login />
+            <Messenger />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
+        paddingTop: Constants.statusBarHeight,
+        // alignItems: "center",
+        // justifyContent: "center",
     },
 });
