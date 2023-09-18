@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import React from "react";
 
-export default function TodoInput({ value, onChangeText}) {
-    return <TextInput style={styles.container} value={value} onChangeText={onChangeText} />;
+export default function TodoInput({ value, onChangeText, placeholder }) {
+    return <TextInput style={styles.container} value={value} onChangeText={onChangeText} placeholder={placeholder} />;
 }
 
 const styles = StyleSheet.create({
@@ -13,5 +13,6 @@ const styles = StyleSheet.create({
         flex: 1,
         borderRadius: 5,
         height: 40,
+        color: "white",
     },
 });
