@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, TextInput, Text, SafeAreaView, TouchableOpacity, FlatList } from "react-native";
+import { StyleSheet, View, TextInput, Text, SafeAreaView, Alert, FlatList } from "react-native";
 import { useState } from "react";
 import Constants from "expo-constants";
 import Todo from "./src/components/Todo";
@@ -14,40 +14,58 @@ export default function App() {
             id: "1",
             name: "Tarea de Eder",
             isCompleted: false,
+            createdAt: "2021-10-01T00:00:00.000Z",
+            updatedAt: "",
         },
     ]);
 
-    const handleAddTodo = () => {
-        console.log(todos);
-        console.log("handleAddTodo");
+    handleAddTodo = () => {
         if (inputValue === "") {
-            return;
-        } else {
-            setTodos([
-                ...todos,
-                {
-                    id: new Date().toISOString(),
-                    name: inputValue,
-                    isCompleted: false,
-                },
-            ]);
-            setInputValue("");
+            return handleShowerror("El campo no puede estar vacio");
         }
+        const existe = todos.some((todo) => todo.name.toLocaleLowerCase() === inputValue.toLocaleLowerCase());
+        if (existe) {
+            return handleShowerror("El campo ya existe");
+        }
+        const now = new Date();
+        const createdDate = now.toISOString();
+        setTodos([
+            ...todos,
+            {
+                id: createdDate,
+                name: inputValue,
+                isCompleted: false,
+                createdAt: createdDate,
+                updatedAt: "",
+            },
+        ]);
+        setInputValue("");
+        console.log(todos);
     };
 
-    const handleCompleteTodo = (id) => {
-        console.log("handleCompleteTodo");
+    handleDeleteTodo = (id) => {
+        const newTodos = todos.filter((todo) => todo.id !== id);
+        setTodos(newTodos);
+    };
+
+    handleDoneTodo = (id) => {
         const newTodos = todos.map((todo) => {
             if (todo.id === id) {
-                return {
-                    ...todo,
-                    isCompleted: !todo.isCompleted,
-                };
-            } else {
-                return todo;
+                todo.isCompleted = !todo.isCompleted;
             }
+            return todo;
         });
         setTodos(newTodos);
+    };
+
+    handleShowerror = (error) => {
+        Alert.alert("Error", error, [
+            {
+                text: "Aceptar",
+                onPress: () => console.log("Aceptar Pressed"),
+                style: "ok",
+            },
+        ]);
     };
 
     return (
@@ -60,8 +78,16 @@ export default function App() {
             <FlatList
                 data={todos}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item: { name } }) => {
-                    return <Todo name={name} />;
+                renderItem={({ item: { id, name, isCompleted } }) => {
+                    return (
+                        <Todo
+                            id={id}
+                            name={name}
+                            isCompleted={isCompleted}
+                            handleDelete={handleDeleteTodo}
+                            handleComplete={handleDoneTodo}
+                        />
+                    );
                 }}
                 ItemSeparatorComponent={() => {
                     return <View style={{ height: 1, backgroundColor: "#000", marginTop: 10 }} />;

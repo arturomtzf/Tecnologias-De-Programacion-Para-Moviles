@@ -3,11 +3,11 @@ import React from "react";
 import CustomButton from "./CustomButton";
 import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
 
-export default function Todo({ name, isCompleted }) {
+export default function Todo({ id, name, isCompleted, handleDelete, handleComplete }) {
     return (
         <View style={styles.container}>
             <View style={styles.container2}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handleComplete(id)}>
                     {isCompleted ? (
                         <AntDesign name="checksquare" size={24} color="white" />
                     ) : (
@@ -20,7 +20,7 @@ export default function Todo({ name, isCompleted }) {
                 <TouchableOpacity style={styles.options}>
                     <Feather name="edit-2" size={24} color="white" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.options}>
+                <TouchableOpacity style={styles.options} onPress={() => handleDelete(id)}>
                     <MaterialIcons name="delete" size={24} color="white" />
                 </TouchableOpacity>
             </View>
@@ -50,5 +50,5 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 1,
         borderColor: "white",
-    }
+    },
 });
