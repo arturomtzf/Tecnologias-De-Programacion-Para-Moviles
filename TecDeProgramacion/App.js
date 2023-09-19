@@ -9,6 +9,8 @@ import AddButton from "./src/components/AddButton";
 
 export default function App() {
     const [inputValue, setInputValue] = useState("");
+    const [boolEdit, setBoolEdit] = useState(false);
+    const [editId, setEditId] = useState("");
     const [todos, setTodos] = useState([
         {
             id: "1",
@@ -27,6 +29,10 @@ export default function App() {
         if (existe) {
             return handleShowerror("El campo ya existe");
         }
+        if (boolEdit) {
+            handleEditConfirm();
+            return;
+        }
         const now = new Date();
         const createdDate = now.toISOString();
         setTodos([
@@ -40,7 +46,31 @@ export default function App() {
             },
         ]);
         setInputValue("");
-        console.log(todos);
+        // console.log(todos);
+    };
+
+    handleEditTodo = (id) => {
+        todos.map((todo) => {
+            if (todo.id === id) {
+                setInputValue(todo.name);
+                setBoolEdit(true);
+                setEditId(id);
+                return;
+            }
+        });
+    };
+
+    handleEditConfirm = () => {
+        const newTodos = todos.map((todo) => {
+            if (todo.id === editId) {
+                todo.name = inputValue;
+                todo.updatedAt = new Date().toISOString();
+            }
+            return todo;
+        });
+        setTodos(newTodos);
+        setInputValue("");
+        setBoolEdit(false);
     };
 
     handleDeleteTodo = (id) => {
@@ -73,12 +103,12 @@ export default function App() {
             <Text style={styles.titulo}>Todo List</Text>
             <View style={{ flexDirection: "row", margin: 20, gap: 20, marginBottom: 0 }}>
                 <TodoInput value={inputValue} onChangeText={(text) => setInputValue(text)} placeholder="Add a task" />
-                <AddButton onPress={handleAddTodo} />
+                <AddButton onPress={handleAddTodo} editMode={boolEdit} />
             </View>
             <FlatList
                 data={todos}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item: { id, name, isCompleted } }) => {
+                renderItem={({ item: { id, name, isCompleted, createdAt, updatedAt } }) => {
                     return (
                         <Todo
                             id={id}
@@ -86,6 +116,9 @@ export default function App() {
                             isCompleted={isCompleted}
                             handleDelete={handleDeleteTodo}
                             handleComplete={handleDoneTodo}
+                            handleEdit={handleEditTodo}
+                            createdAt={createdAt}
+                            updatedAt={updatedAt}
                         />
                     );
                 }}

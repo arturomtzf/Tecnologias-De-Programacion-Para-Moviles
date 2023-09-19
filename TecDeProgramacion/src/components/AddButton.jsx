@@ -2,10 +2,16 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 
-export default function AddButton({ onPress }) {
+export default function AddButton({ onPress, editMode }) {
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>
-            <AntDesign name="arrowup" size={24} color="white" />
+            {
+                editMode ? (
+                    <AntDesign name="edit" size={24} color="white" />
+                ) : (
+                    <AntDesign name="arrowup" size={24} color="white" />
+                )
+            }
         </TouchableOpacity>
     );
 }
