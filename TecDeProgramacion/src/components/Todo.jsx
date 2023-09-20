@@ -7,7 +7,7 @@ export default function Todo({ id, name, isCompleted, handleDelete, handleComple
     return (
         <View style={styles.container}>
             <View style={styles.container2}>
-                <TouchableOpacity onPress={() => handleComplete(id)}>
+                <TouchableOpacity onPress={handleComplete}>
                     {isCompleted ? (
                         <AntDesign name="checksquare" size={24} color="#3ab34a" />
                     ) : (
@@ -21,10 +21,10 @@ export default function Todo({ id, name, isCompleted, handleDelete, handleComple
                 </View>
             </View>
             <View style={{ flexDirection: "row", gap: 10 }}>
-                <TouchableOpacity style={styles.options} onPress={() => handleEdit(id)}>
+                <TouchableOpacity style={styles.options} onPress={handleEdit}>
                     <Feather name="edit-2" size={24} color="white" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.options} onPress={() => handleDelete(id)}>
+                <TouchableOpacity style={styles.options} onPress={handleDelete}>
                     <MaterialIcons name="delete" size={24} color="white" />
                 </TouchableOpacity>
             </View>
