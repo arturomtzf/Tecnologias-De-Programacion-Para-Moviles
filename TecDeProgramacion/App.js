@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, TextInput, Text, SafeAreaView, Alert, FlatList } from "react-native";
+import { StyleSheet, View, Pressable, Text, SafeAreaView, Modal, FlatList } from "react-native";
 import { useState } from "react";
 import Constants from "expo-constants";
 import Todo from "./src/components/Todo";
@@ -8,11 +8,59 @@ import AddButton from "./src/components/AddButton";
 import { useTodos } from "./src/hooks/useTodos";
 
 export default function App() {
-    const { input, todos, edit, setInput, handleAddTodo, handleDeleteTodo, handleDoneTodo, handleEditTodo, handleUpdateTodo } =
-        useTodos();
+    const {
+        input,
+        todos,
+        todo,
+        edit,
+        setInput,
+        handleAddTodo,
+        handleDeleteTodo,
+        handleDoneTodo,
+        handleEditTodo,
+        handleUpdateTodo,
+        modalVisible,
+        handleView,
+        handleCloseModal,
+    } = useTodos();
 
     return (
         <SafeAreaView style={styles.container}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setModalVisible(!modalVisible);
+                }}
+                backgroundColor="rgba(0, 0, 0, 1)"
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <View style={styles.modalContainer}>
+                            <Text style={styles.modalTitle}>Name: </Text>
+                            <Text style={styles.modalText}>{todo.name}</Text>
+                        </View>
+                        <View style={styles.modalContainer}>
+                            <Text style={styles.modalTitle}>Done: </Text>
+                            <Text style={styles.modalText}>{todo.done ? "Yes" : "No"}</Text>
+                        </View>
+                        <View style={styles.modalContainer}>
+                            <Text style={styles.modalTitle}>Created At: </Text>
+                            <Text style={styles.modalText}>{todo.createdAt}</Text>
+                        </View>
+                        <View style={styles.modalContainer}>
+                            <Text style={styles.modalTitle}>Updated At: </Text>
+                            <Text style={styles.modalText}>{todo.updatedAt === "" ? "Not updated" : todo.updatedAt}</Text>
+                        </View>
+                        <Pressable style={[styles.button, styles.buttonClose]} onPress={handleCloseModal}>
+                            <Text style={styles.textStyle}>Close</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
+
             <Text style={styles.titulo}>Todo List</Text>
             <View style={{ flexDirection: "row", margin: 20, gap: 20, marginBottom: 0 }}>
                 <TodoInput value={input} onChangeText={(text) => setInput(text)} placeholder="Add a task" />
@@ -30,6 +78,7 @@ export default function App() {
                             handleDelete={() => handleDeleteTodo(id)}
                             handleComplete={() => handleDoneTodo(id)}
                             handleEdit={() => handleEditTodo(id)}
+                            handleView={() => handleView(id)}
                             createdAt={createdAt}
                             updatedAt={updatedAt}
                         />
@@ -59,5 +108,53 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
         color: "white",
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    button: {
+        borderRadius: 20,
+        padding: 10,
+        paddingHorizontal: 20,
+        elevation: 2,
+    },
+    buttonOpen: {
+        backgroundColor: "#F194FF",
+    },
+    buttonClose: {
+        backgroundColor: "#2196F3",
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+    },
+    modalText: {
+        fontSize: 20,
+    },
+    modalTitle: {
+        fontWeight: "bold",
+        fontSize: 20,
+    },
+    modalContainer: {
+        flexDirection: "row",
     },
 });

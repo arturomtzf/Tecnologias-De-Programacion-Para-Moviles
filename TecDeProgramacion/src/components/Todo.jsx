@@ -3,7 +3,17 @@ import React from "react";
 import CustomButton from "./CustomButton";
 import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
 
-export default function Todo({ id, name, isCompleted, handleDelete, handleComplete, handleEdit, createdAt, updatedAt }) {
+export default function Todo({
+    id,
+    name,
+    isCompleted,
+    handleDelete,
+    handleComplete,
+    handleEdit,
+    handleView,
+    createdAt,
+    updatedAt,
+}) {
     return (
         <View style={styles.container}>
             <View style={styles.container2}>
@@ -15,12 +25,17 @@ export default function Todo({ id, name, isCompleted, handleDelete, handleComple
                     )}
                 </TouchableOpacity>
                 <View>
-                    <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>{name}</Text>
+                    <Text style={{ fontSize: 15, fontWeight: "bold", color: "white" }}>
+                        {name.length > 20 ? name.slice(0, 20) + "..." : name}
+                    </Text>
                     <Text style={styles.textInfo}>Created at: {createdAt}</Text>
                     {updatedAt && <Text style={styles.textInfo}>Updated at: {updatedAt}</Text>}
                 </View>
             </View>
             <View style={{ flexDirection: "row", gap: 10 }}>
+                <TouchableOpacity style={styles.options} onPress={handleView}>
+                    <AntDesign name="eyeo" size={24} color="white" />
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.options} onPress={handleEdit}>
                     <Feather name="edit-2" size={24} color="white" />
                 </TouchableOpacity>
@@ -57,6 +72,6 @@ const styles = StyleSheet.create({
     },
     textInfo: {
         color: "white",
-        fontSize: 12,
+        fontSize: 11,
     },
 });

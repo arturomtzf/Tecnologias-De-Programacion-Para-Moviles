@@ -4,9 +4,26 @@ import { handleError } from "../helpers/handleError";
 export const useTodos = () => {
     const currentDate = new Date();
     const [input, setInput] = useState("");
-    const [todos, setTodos] = useState([]);
+    const [todos, setTodos] = useState([
+        {
+            id: "1",
+            name: "Ganar Regional de InnovaTec",
+            done: true,
+            createdAt: "20/9/2023 15:35",
+            updatedAt: "",
+        },
+        {
+            id: "2",
+            name: "Ganar Nacional de InnovaTec en Puebla",
+            done: false,
+            createdAt: "20/9/2023 15:35",
+            updatedAt: "",
+        },
+    ]);
+    const [todo, setTodo] = useState({});
     const [edit, setEdit] = useState(false);
     const [update, setUpdate] = useState("");
+    const [modalVisible, setModalVisible] = useState(false);
 
     const day = currentDate.getDate();
     const month = currentDate.getMonth() + 1;
@@ -85,9 +102,29 @@ export const useTodos = () => {
         setUpdate("");
     };
 
+    const handleView = (id) => {
+        todos.map((todo) => {
+            if (todo.id === id) {
+                setTodo({
+                    id: todo.id,
+                    name: todo.name,
+                    done: todo.done,
+                    createdAt: todo.createdAt,
+                    updatedAt: todo.updatedAt,
+                });
+                setModalVisible(true);
+            }
+        });
+    };
+
+    const handleCloseModal = () => {
+        setModalVisible(false);
+    };
+
     return {
         input,
         todos,
+        todo,
         edit,
         setInput,
         handleAddTodo,
@@ -95,5 +132,8 @@ export const useTodos = () => {
         handleDoneTodo,
         handleEditTodo,
         handleUpdateTodo,
+        handleView,
+        handleCloseModal,
+        modalVisible,
     };
 };
