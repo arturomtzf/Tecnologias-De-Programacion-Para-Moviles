@@ -1,6 +1,7 @@
-import { StatusBar } from "expo-status-bar";
+import Constants from "expo-constants";
 import { StyleSheet, View, Text, FlatList } from "react-native";
 import { useEffect, useState } from "react";
+import Character from "./src/components/Character";
 
 export default function App() {
     const [characters, setCharacters] = useState([]);
@@ -20,27 +21,37 @@ export default function App() {
 
     return (
         <View style={styles.container}>
-            <Text style={{ fontSize: 30 }}>Caracteres</Text>
+            <Text style={styles.title}>The Rick and Morty API</Text>
             <FlatList
                 data={characters}
-                ItemSeparatorComponent={() => <View ></View>}
+                ItemSeparatorComponent={() => <View></View>}
                 renderItem={({ item }) => (
-                    <View>
-                        <Text>{item.id}</Text>
-                        <Text>{item.name}</Text>
-                        <Text>{item.gender}</Text>
-                    </View>
+                    <Character
+                        image={item.image}
+                        name={item.name}
+                        status={item.status}
+                        species={item.species}
+                        location={item.location.name}
+                        origin={item.origin.name}
+                    />
                 )}
-            ></FlatList>
+            />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
+        // flex: 1,
+        backgroundColor: "#272b33",
+        paddingTop: Constants.statusBarHeight,
+        // alignItems: "center",
+        // justifyContent: "center",
+    },
+    title: {
+        color: "#fff",
+        fontSize: 30,
+        fontWeight: "bold",
+        textAlign: "center",
     },
 });
