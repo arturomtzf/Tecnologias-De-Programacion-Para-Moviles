@@ -1,21 +1,33 @@
 import Constants from "expo-constants";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, View, StatusBar } from "react-native";
+import "react-native-gesture-handler";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
 import Login from "./src/screens/Login";
+import Home from "./src/screens/Home";
+import Routes from "./src/routes/routes";
+
+// Tarea:  De la tarea que hicimos con los personajes de Rick and Morthy. Hacer una propiedad de ver personaje en cada card, y cuando le den click que los mnadne a una pantalla donde se muestre ***TODA*** la info del personaje.
+
+const Stack = createStackNavigator();
 
 export default function App() {
     return (
-        <View style={styles.container}>
-            <Login />
-        </View>
+        <NavigationContainer>
+            <View style={styles.container}>
+                <Stack.Navigator initialRouteName="Login">
+                    <Stack.Screen name="Home" component={Home} />
+                    <Stack.Screen name="Login" component={Login} />
+                </Stack.Navigator>
+            </View>
+            <StatusBar />
+        </NavigationContainer>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
+        flex: 1,
         backgroundColor: "#fff",
-        paddingTop: Constants.statusBarHeight,
-        // alignItems: "center",
-        // justifyContent: "center",
     },
 });
