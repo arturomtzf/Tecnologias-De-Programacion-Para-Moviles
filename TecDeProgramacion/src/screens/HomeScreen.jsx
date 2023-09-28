@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Text, View } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
-  console.log(navigation);
+  // console.log(navigation);
   const { canGoBack, goBack } = navigation;
   return (
     <View>

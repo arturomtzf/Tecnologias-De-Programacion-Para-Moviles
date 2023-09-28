@@ -4,7 +4,7 @@ import Hearder from "../components/Hearder";
 
 const LoginScreen = ({ navigation, route }) => {
   const { name } = route.params;
-  console.log(navigation);
+  // console.log(navigation);
   const { canGoBack, goBack } = navigation;
   return (
     <View>
