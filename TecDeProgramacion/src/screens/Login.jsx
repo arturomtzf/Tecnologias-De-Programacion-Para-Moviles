@@ -1,22 +1,28 @@
-import React from "react";
-import { Button, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Header from "../components/CustomHeader/Header";
+import React from "react";
+import Header from "../components/Header";
 
 const Login = ({ route }) => {
   const { name } = route.params;
 
-  const { canGoBack, goBack } = useNavigation();
+  const navigation = useNavigation();
 
   // console.log(navigation);
 
   return (
     <View>
-      <Text>Login</Text>
+      <Header />
       <Text>{name}</Text>
-      <Button title="Go back" disabled={!canGoBack} onPress={() => goBack()} />
+      <Button
+        title="Go back"
+        disabled={!navigation.canGoBack()}
+        onPress={() => navigation.goBack()}
+      />
     </View>
   );
 };
 
 export default Login;
+
+const styles = StyleSheet.create({});
