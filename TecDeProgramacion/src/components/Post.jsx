@@ -31,9 +31,11 @@ export default function Post({ profilePic, name, image, caption, likes }) {
                 </View>
                 <AntDesign name="save" size={28} color="white" />
             </View>
-            <Text style={styles.likes}>Liked by <Text style={{fontWeight: "800"}}>arturomtzf</Text> and {likesCount - 1} others</Text>
+            <Text style={styles.likes}>
+                Liked by <Text style={{ fontWeight: "800" }}>arturomtzf</Text> and {likesCount - 1} others
+            </Text>
             <Text style={styles.caption}>
-                <Text style={{fontWeight: "800"}}>{name}</Text> {caption}
+                <Text style={{ fontWeight: "800" }}>{name}</Text> {caption}
             </Text>
         </View>
     );
