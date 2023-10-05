@@ -88,14 +88,24 @@ export default function Send() {
             justifyContent: "center",
             marginLeft: 130,
         },
+        btnContainer: {
+            borderRadius: 15,
+            alignItems: "center",
+            justifyContent: "center",
+            borderWidth: 1,
+            borderColor: isDarkMode ? "white" : "black",
+            padding: 8,
+        },
     });
 
     return (
         <View style={styles.container}>
             <View style={styles.topBar}>
-                <AntDesign name="arrowleft" size={24} color={isDarkMode ? "white" : "black"} />
+                <TouchableOpacity style={styles.btnContainer} onPress={() => toggleTheme()}>
+                    <AntDesign name="arrowleft" size={24} color={isDarkMode ? "white" : "black"} />
+                </TouchableOpacity>
                 <Text style={styles.txtTitle}>Send</Text>
-                <TouchableOpacity onPress={() => toggleTheme()}>
+                <TouchableOpacity onPress={() => toggleTheme()} style={styles.btnContainer}>
                     <AntDesign name="message1" size={24} color={isDarkMode ? "white" : "black"} />
                 </TouchableOpacity>
             </View>
