@@ -12,6 +12,9 @@ import { useAuthContext } from "./src/hooks/useAuthContext";
 import Welcome from "./src/screens/Welcome";
 import Signin from "./src/screens/Signin";
 import EmptyScreen from "./src/screens/EmptyScreen";
+import Explore from "./src/screens/Explore";
+import Favorites from "./src/screens/Favorites";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 
@@ -30,17 +33,63 @@ function HomeTabs() {
     );
 }
 
+var color = "gray";
 export default function App() {
+    const size = 34;
     return (
         <AuthContextProvider>
             <NavigationContainer>
                 <View style={styles.container}>
-                    <Stack.Navigator initialRouteName="Welcome">
-                        <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
-                        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-                        <Stack.Screen name="Signin" component={Signin} options={{ headerShown: false }} />
-                        <Stack.Screen name="HomeTabs" component={HomeTabs} options={{headerShown: false}}/>
-                    </Stack.Navigator>
+                    <Tab.Navigator barStyle={{ height: 70, backgroundColor: "#201e2b" }}>
+                        <Tab.Screen
+                            name="Home"
+                            component={Home}
+                            options={{
+                                tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="home" color={color} size={24} />,
+                            }}
+                        />
+                        <Tab.Screen
+                            name="Explore"
+                            component={Explore}
+                            options={{
+                                tabBarIcon: ({ color, size }) => (
+                                    <MaterialCommunityIcons name="magnify" color={color} size={24} />
+                                ),
+                            }}
+                        />
+                        <Tab.Screen
+                            name="Add"
+                            component={EmptyScreen}
+                            options={{
+                                tabBarIcon: ({ color, size }) => (
+                                    <View style={{padding: 10, backgroundColor: "orange"}}>
+                                        <MaterialCommunityIcons name="plus" color="white" size={24} />
+                                    </View>
+                                ),
+                            }}
+                        />
+                        <Tab.Screen
+                            name="Favorites"
+                            component={Favorites}
+                            options={{
+                                tabBarIcon: ({ color, size }) => (
+                                    <View>
+                                        <MaterialCommunityIcons name="heart" color={color} size={24} />
+                                    </View>
+                                ),
+                            }}
+                        />
+                        <Tab.Screen
+                            name="Profile"
+                            component={EmptyScreen}
+                            options={{
+                                tabBarIcon: ({ color, size }) => (
+                                    <MaterialCommunityIcons name="account" color={color} size={24} />
+                                ),
+                            }}
+                        />
+                    </Tab.Navigator>
+
                     <StatusBar style="auto" />
                 </View>
             </NavigationContainer>
