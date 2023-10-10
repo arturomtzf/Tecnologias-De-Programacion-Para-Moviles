@@ -10,7 +10,7 @@ const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState("");
 
   const handleLogin = (username, password) => {
-    if (username === "Armafu" && password === "123") {
+    if (username === "armafu@gmail.com" && password === "123") {
       setUser(username);
       return true;
     }
@@ -23,6 +23,7 @@ const AuthContextProvider = ({ children }) => {
 
   const values = {
     user,
+    setUser,
     handleLogin,
     handleLogOut,
   };

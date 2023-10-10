@@ -9,13 +9,39 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const { handleLogin: onLogin } = useAuthContext();
+    const { handleLogin: onLogin, setUser } = useAuthContext();
 
     const handleLogin = () => {
         try {
+            if (!username || !password) {
+                Alert.alert("Error", "Faltan campos por llenar", [
+                    {
+                        text: "Cancel",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel",
+                    },
+                    { text: "OK", onPress: () => console.log("OK Pressed") },
+                ]);
+                return;
+            }
+
+            const emailRegex = /\S+@\S+\.\S+/;
+            if (!emailRegex.test(username)) {
+                Alert.alert("Error", "El email no es valido", [
+                    {
+                        text: "Cancel",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel",
+                    },
+                    { text: "OK", onPress: () => console.log("OK Pressed") },
+                ]);
+                return;
+            }
+
             const loginValue = onLogin(username, password);
             if (loginValue) {
-                navigation.navigate("HomeTabs");
+                setUser(username);
+                navigation.navigate("HomeDrawer");
                 setPassword("");
                 setUsername("");
             } else {
