@@ -1,14 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Constants from "expo-constants";
-import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
-import Home from "./src/screens/Home";
-import Login from "./src/screens/Login";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthContextProvider from "./src/context/authContext";
+import Home from "./src/screens/Home";
+import Login from "./src/screens/Login";
 import Account from "./src/screens/Account";
-import { useAuthContext } from "./src/hooks/useAuthContext";
 
 const Stack = createStackNavigator();
 
@@ -18,7 +16,6 @@ export default function App() {
       <NavigationContainer>
         <View style={styles.container}>
           <Stack.Navigator initialRouteName="Login">
-            {/* {Layout()} */}
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Account" component={Account} />
             <Stack.Screen name="Login" component={Login} />
@@ -29,21 +26,6 @@ export default function App() {
     </AuthContextProvider>
   );
 }
-
-const Layout = () => {
-  const { user } = useAuthContext();
-
-  if (!user) {
-    return <Stack.Screen name="Login" component={Login} />;
-  }
-
-  return (
-    <>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Account" component={Account} />
-    </>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
