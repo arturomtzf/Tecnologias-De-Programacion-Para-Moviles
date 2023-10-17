@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Pizza } from "../../assets";
 import Burgers from "../components/Burgers";
 import { Burger } from "../../assets";
+import Constants from "expo-constants";
 
 const Home = () => {
   const navigation = useNavigation();
@@ -109,6 +110,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: "#fbfcfe",
   },
 });

@@ -1,4 +1,5 @@
 import React from "react";
+import Constants from "expo-constants";
 import { View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
@@ -15,10 +16,12 @@ const Header = () => {
         paddingHorizontal: 15,
         gap: 10,
         justifyContent: "space-between",
+        paddingTop: Constants.statusBarHeight,
       }}
     >
       <View
         style={{
+          backgroundColor: "red",
           width: 50,
           height: 50,
           borderWidth: 0.5,
@@ -28,12 +31,7 @@ const Header = () => {
           alignItems: "center",
         }}
       >
-        <AntDesign
-          name="appstore-o"
-          size={24}
-          color="#21b2b2"
-          onPress={() => navigation.openDrawer()}
-        />
+        <AntDesign name="appstore-o" size={24} color="#21b2b2" onPress={() => navigation.openDrawer()} />
       </View>
       <View
         style={{
