@@ -1,0 +1,16 @@
+Step 1: Install the package
+npx expo install react-native-reanimated
+
+Step 2: Add Reanimated's babel plugin
+  module.exports = {
+    presets: [
+      ... // don't add it here :)
+    ],
+    plugins: [
+      ...
+      'react-native-reanimated/plugin',
+    ],
+  };
+
+Step 3: Clear cache (recommended)
+npx expo start -c
