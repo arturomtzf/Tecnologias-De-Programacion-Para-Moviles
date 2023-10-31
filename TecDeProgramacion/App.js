@@ -81,27 +81,43 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{state.displayNumber}</Text>
-      <View style={styles.row}>
-        <Number text="7" role="number" onPress={handleSelectNumber}></Number>
-        <Number text="8" role="number" onPress={handleSelectNumber}></Number>
-        <Number text="9" role="number" onPress={handleSelectNumber}></Number>
-        <Number text="/" role="operator" onPress={handleSelectOperator}></Number>
+      <View style={styles.display}>
+        <Text style={{fontSize: 20}}>
+          {state.previousNumber} {state.operator}
+        </Text>
+        <View style={styles.capsule}>
+          <Text style={styles.text}>{state.displayNumber}</Text>
+        </View>
       </View>
       <View style={styles.row}>
-        <Number text="4" role="number" onPress={handleSelectNumber}></Number>
-        <Number text="5" role="number" onPress={handleSelectNumber}></Number>
-        <Number text="6" role="number" onPress={handleSelectNumber}></Number>
-        <Number text="*" role="operator" onPress={handleSelectOperator}></Number>
+        <Number text="AC" color="gray"></Number>
+        <Number text="%" color="gray"></Number>
+        <Number text="◀️" color="gray"></Number>
+        <Number text="/" color="white" onPress={handleSelectOperator}></Number>
       </View>
       <View style={styles.row}>
-        <Number text="1" role="number" onPress={handleSelectNumber}></Number>
-        <Number text="2" role="number" onPress={handleSelectNumber}></Number>
-        <Number text="3" role="number" onPress={handleSelectNumber}></Number>
-        <Number text="-" role="operator" onPress={handleSelectOperator}></Number>
+        <Number text="7" color="green" onPress={handleSelectNumber}></Number>
+        <Number text="8" color="green" onPress={handleSelectNumber}></Number>
+        <Number text="9" color="green" onPress={handleSelectNumber}></Number>
+        <Number text="*" color="white" onPress={handleSelectOperator}></Number>
       </View>
-      <View>
-        <Number text="=" role="operator" onPress={handleCalculate}></Number>
+      <View style={styles.row}>
+        <Number text="4" color="green" onPress={handleSelectNumber}></Number>
+        <Number text="5" color="green" onPress={handleSelectNumber}></Number>
+        <Number text="6" color="green" onPress={handleSelectNumber}></Number>
+        <Number text="-" color="white" onPress={handleSelectOperator}></Number>
+      </View>
+      <View style={styles.row}>
+        <Number text="1" color="green" onPress={handleSelectNumber}></Number>
+        <Number text="2" color="green" onPress={handleSelectNumber}></Number>
+        <Number text="3" color="green" onPress={handleSelectNumber}></Number>
+        <Number text="+" color="white" onPress={handleSelectOperator}></Number>
+      </View>
+      <View style={styles.row}>
+        <Number text="🆒" color="gray" onPress={handleCalculate}></Number>
+        <Number text="0" color="green" onPress={handleCalculate}></Number>
+        <Number text="." color="gray" onPress={handleCalculate}></Number>
+        <Number text="=" color="white" onPress={handleCalculate}></Number>
       </View>
     </View>
   );
@@ -110,7 +126,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#78c09d",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -122,5 +138,16 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 80,
     textAlign: "right",
+  },
+  display: {
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+  },
+  capsule: {
+    backgroundColor: "#78c09d",
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    width: 300,
   },
 });
