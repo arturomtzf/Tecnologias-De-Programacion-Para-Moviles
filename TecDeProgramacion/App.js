@@ -14,45 +14,96 @@ const CALCULATOR_TYPES = {
   SELECT_NUMBER: "SELECT_NUMBER",
   SELECT_OPERATOR: "SELECT_OPERATOR",
   CALCULATE: "CALCULATE",
+  CLEAR: "CLEAR",
+  ADD_DOT: "ADD_DOT",
+  DELETE: "DELETE",
 };
 
 const initialState = {
   displayNumber: 0,
   operator: "", // +, -, *, /
   previousNumber: 0,
-  currentNumber: 0,
 };
 
 function reducer(state, action) {
   switch (action.type) {
+    case CALCULATOR_TYPES.CLEAR:
+      return {
+        ...state,
+        displayNumber: 0,
+        operator: "",
+        previousNumber: 0,
+      };
+    case CALCULATOR_TYPES.DELETE:
+      return {
+        ...state,
+        displayNumber: state.displayNumber.toString().slice(0, -1),
+      };
+    case CALCULATOR_TYPES.ADD_DOT:
+      if (state.displayNumber.toString().includes(".")) {
+        return state;
+      }
+      return {
+        ...state,
+        displayNumber: state.displayNumber + ".",
+      };
     case CALCULATOR_TYPES.SELECT_NUMBER:
       return {
         ...state,
-        currentNumber: action.payload,
-        displayNumber: action.payload,
+        displayNumber: state.displayNumber === 0 ? action.payload : state.displayNumber + action.payload,
       };
     case CALCULATOR_TYPES.SELECT_OPERATOR:
+      if (state.operator) {
+        return state;
+      }
       return {
         ...state,
         operator: action.payload,
-        previousNumber: state.currentNumber,
+        previousNumber: state.displayNumber,
+        displayNumber: 0,
       };
     case CALCULATOR_TYPES.CALCULATE:
       let result = 0;
       switch (state.operator) {
         case "*":
-          result = state.previousNumber * state.currentNumber;
+          result = state.previousNumber * state.displayNumber;
           return {
             ...state,
             displayNumber: result,
-            currentNumber: result,
+            operator: "",
+            previousNumber: 0,
           };
         case "-":
-          result = state.previousNumber - state.currentNumber;
+          result = state.previousNumber - state.displayNumber;
           return {
             ...state,
             displayNumber: result,
-            currentNumber: result,
+            operator: "",
+            previousNumber: 0,
+          };
+        case "+":
+          result = parseFloat(state.previousNumber) + parseFloat(state.displayNumber);
+          return {
+            ...state,
+            displayNumber: result,
+            operator: "",
+            previousNumber: 0,
+          };
+        case "/":
+          result = state.previousNumber / state.displayNumber;
+          return {
+            ...state,
+            displayNumber: result,
+            operator: "",
+            previousNumber: 0,
+          };
+        case "%":
+          result = state.previousNumber % state.displayNumber;
+          return {
+            ...state,
+            displayNumber: result,
+            operator: "",
+            previousNumber: 0,
           };
       }
     default:
@@ -66,12 +117,10 @@ export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleSelectNumber = (number) => {
-    console.log(number);
     dispatch({ type: CALCULATOR_TYPES.SELECT_NUMBER, payload: number });
   };
 
   const handleSelectOperator = (operator) => {
-    console.log(operator);
     dispatch({ type: CALCULATOR_TYPES.SELECT_OPERATOR, payload: operator });
   };
 
@@ -79,10 +128,22 @@ export default function App() {
     dispatch({ type: CALCULATOR_TYPES.CALCULATE });
   };
 
+  const handleClear = () => {
+    dispatch({ type: CALCULATOR_TYPES.CLEAR });
+  };
+
+  const handleDot = () => {
+    dispatch({ type: CALCULATOR_TYPES.ADD_DOT });
+  };
+
+  const handleDelete = () => {
+    dispatch({ type: CALCULATOR_TYPES.DELETE });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.display}>
-        <Text style={{fontSize: 20}}>
+        <Text style={{ fontSize: 20 }}>
           {state.previousNumber} {state.operator}
         </Text>
         <View style={styles.capsule}>
@@ -90,9 +151,9 @@ export default function App() {
         </View>
       </View>
       <View style={styles.row}>
-        <Number text="AC" color="gray"></Number>
-        <Number text="%" color="gray"></Number>
-        <Number text="◀️" color="gray"></Number>
+        <Number text="C" color="gray" onPress={handleClear}></Number>
+        <Number text="%" color="gray" onPress={handleSelectOperator}></Number>
+        <Number text="◀️" color="gray" onPress={handleDelete}></Number>
         <Number text="/" color="white" onPress={handleSelectOperator}></Number>
       </View>
       <View style={styles.row}>
@@ -114,9 +175,9 @@ export default function App() {
         <Number text="+" color="white" onPress={handleSelectOperator}></Number>
       </View>
       <View style={styles.row}>
-        <Number text="🆒" color="gray" onPress={handleCalculate}></Number>
-        <Number text="0" color="green" onPress={handleCalculate}></Number>
-        <Number text="." color="gray" onPress={handleCalculate}></Number>
+        <Number text="AC" color="gray" onPress={handleClear}></Number>
+        <Number text="0" color="green" onPress={handleSelectNumber}></Number>
+        <Number text="." color="gray" onPress={handleDot}></Number>
         <Number text="=" color="white" onPress={handleCalculate}></Number>
       </View>
     </View>
