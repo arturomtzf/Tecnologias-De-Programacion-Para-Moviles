@@ -2,138 +2,123 @@ import { useState } from "react";
 import { handleError } from "../helpers/handleError";
 
 export const useTodos = () => {
-    const currentDate = new Date();
-    const [input, setInput] = useState("");
-    const [todos, setTodos] = useState([
-        {
-            id: "1",
-            name: "Ganar Regional de InnovaTec",
-            done: true,
-            createdAt: "20/9/2023 15:35",
-            updatedAt: "",
-        },
-        {
-            id: "2",
-            name: "Ganar Nacional de InnovaTec en Puebla",
-            done: false,
-            createdAt: "20/9/2023 15:35",
-            updatedAt: "",
-        },
+  const currentDate = new Date();
+  const [input, setInput] = useState("");
+  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState({});
+  const [edit, setEdit] = useState(false);
+  const [update, setUpdate] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const day = currentDate.getDate();
+  const month = currentDate.getMonth() + 1;
+  const year = currentDate.getFullYear();
+
+  const hours = currentDate.getHours();
+  const minutes = currentDate.getMinutes();
+
+  const handleAddTodo = () => {
+    if (input === "") return handleError("Ingresar un nombre a la tarea");
+
+    const existingTodo = todos.some((todo) => todo.name.toLowerCase() === input.toLowerCase());
+
+    if (existingTodo) return handleError("Ya existe una tarea con ese nombre");
+
+    setTodos([
+      ...todos,
+      {
+        id: new Date().toISOString(),
+        name: input,
+        done: false,
+        createdAt: `${day}/${month}/${year}` + " " + `${hours}:${minutes}`,
+        updatedAt: "",
+      },
     ]);
-    const [todo, setTodo] = useState({});
-    const [edit, setEdit] = useState(false);
-    const [update, setUpdate] = useState("");
-    const [modalVisible, setModalVisible] = useState(false);
+    setInput("");
+  };
 
-    const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
+  const handleDeleteTodo = (id) => {
+    const newTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(newTodos);
+  };
 
-    const hours = currentDate.getHours();
-    const minutes = currentDate.getMinutes();
+  const handleDoneTodo = (id) => {
+    const completedTodo = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, done: !todo.done };
+      }
+      return todo;
+    });
 
-    const handleAddTodo = () => {
-        if (input === "") return handleError("Ingresar un nombre a la tarea");
+    setTodos(completedTodo);
+  };
 
-        const existingTodo = todos.some((todo) => todo.name.toLowerCase() === input.toLowerCase());
+  const handleEditTodo = (id) => {
+    todos.map((todo) => {
+      if (todo.id === id) {
+        setInput(todo.name);
+        setEdit(true);
+        setUpdate(id);
+      }
+    });
+  };
 
-        if (existingTodo) return handleError("Ya existe una tarea con ese nombre");
+  const handleUpdateTodo = () => {
+    if (input === "") return handleError("Ingresar un nombre a la tarea");
 
-        setTodos([
-            ...todos,
-            {
-                id: new Date().toISOString(),
-                name: input,
-                done: false,
-                createdAt: `${day}/${month}/${year}` + " " + `${hours}:${minutes}`,
-                updatedAt: "",
-            },
-        ]);
-        setInput("");
-    };
+    const existingTodo = todos.some((todo) => todo.name.toLowerCase() === input.toLowerCase());
 
-    const handleDeleteTodo = (id) => {
-        const newTodos = todos.filter((todo) => todo.id !== id);
-        setTodos(newTodos);
-    };
+    if (existingTodo) return handleError("Ya existe una tarea con ese nombre");
 
-    const handleDoneTodo = (id) => {
-        const completedTodo = todos.map((todo) => {
-            if (todo.id === id) {
-                return { ...todo, done: !todo.done };
-            }
-            return todo;
+    const updatedTodo = todos.map((todo) => {
+      if (todo.id === update) {
+        return {
+          ...todo,
+          name: input,
+          updatedAt: `${day}/${month}/${year}` + " " + `${hours}:${minutes}`,
+        };
+      }
+      return todo;
+    });
+
+    setTodos(updatedTodo);
+    setInput("");
+    setEdit(false);
+    setUpdate("");
+  };
+
+  const handleView = (id) => {
+    todos.map((todo) => {
+      if (todo.id === id) {
+        setTodo({
+          id: todo.id,
+          name: todo.name,
+          done: todo.done,
+          createdAt: todo.createdAt,
+          updatedAt: todo.updatedAt,
         });
+        setModalVisible(true);
+      }
+    });
+  };
 
-        setTodos(completedTodo);
-    };
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
 
-    const handleEditTodo = (id) => {
-        todos.map((todo) => {
-            if (todo.id === id) {
-                setInput(todo.name);
-                setEdit(true);
-                setUpdate(id);
-            }
-        });
-    };
-
-    const handleUpdateTodo = () => {
-        if (input === "") return handleError("Ingresar un nombre a la tarea");
-
-        const existingTodo = todos.some((todo) => todo.name.toLowerCase() === input.toLowerCase());
-
-        if (existingTodo) return handleError("Ya existe una tarea con ese nombre");
-
-        const updatedTodo = todos.map((todo) => {
-            if (todo.id === update) {
-                return {
-                    ...todo,
-                    name: input,
-                    updatedAt: `${day}/${month}/${year}` + " " + `${hours}:${minutes}`,
-                };
-            }
-            return todo;
-        });
-
-        setTodos(updatedTodo);
-        setInput("");
-        setEdit(false);
-        setUpdate("");
-    };
-
-    const handleView = (id) => {
-        todos.map((todo) => {
-            if (todo.id === id) {
-                setTodo({
-                    id: todo.id,
-                    name: todo.name,
-                    done: todo.done,
-                    createdAt: todo.createdAt,
-                    updatedAt: todo.updatedAt,
-                });
-                setModalVisible(true);
-            }
-        });
-    };
-
-    const handleCloseModal = () => {
-        setModalVisible(false);
-    };
-
-    return {
-        input,
-        todos,
-        todo,
-        edit,
-        setInput,
-        handleAddTodo,
-        handleDeleteTodo,
-        handleDoneTodo,
-        handleEditTodo,
-        handleUpdateTodo,
-        handleView,
-        handleCloseModal,
-        modalVisible,
-    };
+  return {
+    input,
+    todos,
+    todo,
+    edit,
+    setInput,
+    handleAddTodo,
+    handleDeleteTodo,
+    handleDoneTodo,
+    handleEditTodo,
+    handleUpdateTodo,
+    handleView,
+    handleCloseModal,
+    modalVisible,
+  };
 };
